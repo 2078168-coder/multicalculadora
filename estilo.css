@@ -1,0 +1,942 @@
+/* ============================================================
+   Archivo: estilo.css (Versión Definitiva y Corregida - V4)
+   ============================================================ */
+
+/*
+|============================================================
+| SECCIÓN 1: ESTILOS GLOBALES Y CONTENEDOR PRINCIPAL
+|============================================================
+*/
+* {
+    box-sizing: border-box;
+}
+
+body {
+    font-family: Arial, sans-serif;
+    background: #f0f0f0;
+    margin: 0;
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    /* --- CAMBIOS PARA EL SCROLL --- */
+    height: 100vh; /* Ocupa la altura de la pantalla */
+    overflow-y: auto; /* AÑADIDO: Permite el scroll vertical si el contenido excede la altura */
+    justify-content: flex-start; /* CAMBIADO: Alinea el contenido arriba para un scroll natural */
+    /* --- FIN DE CAMBIOS --- */
+    background-size: cover;
+    background-position: center;
+    transition: background 0.3s;
+}
+
+h1 {
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+/* --- Contenedor Principal (GENÉRICO) --- */
+.main-container {
+    display: flex;
+    gap: 15px;
+    justify-content: center;
+    align-items: flex-start;
+    flex-direction: column;
+}
+
+.calculadora-col {
+    width: 100%;
+    max-width: 500px;
+    margin: 0 auto;
+}
+
+/* --- Panel de Personalización --- */
+.personalizacion-col {
+    width: 100%;
+    max-width: 300px;
+    background: rgba(240,240,240,0.95);
+    padding: 15px;
+    border-radius: 10px;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+    margin: 10px auto;
+}
+
+.personalizacion-grupo {
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 15px;
+}
+
+.personalizacion-grupo label {
+    font-size: 0.95em;
+    margin-bottom: 5px;
+}
+
+/* --- Botones Superiores e Inferiores (Selectores) --- */
+.calculator-selector {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 6px;
+    margin-bottom: 20px;
+}
+
+.calculator-selector button {
+    padding: 6px 10px;
+    font-size: 0.8em;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    background: #4CAF50;
+    color: white;
+    transition: background 0.2s;
+}
+
+.calculator-selector button:hover {
+    background: #45a049;
+}
+
+/* Botón "Editar Estilo" */
+#btn-editar-estilo {
+    position: fixed;
+    top: 15px;
+    right: 15px;
+    padding: 5px 10px;
+    font-size: 0.75em;
+    background: #4CAF50;
+    color: white;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    z-index: 1000;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+    transition: background 0.3s;
+}
+
+#btn-editar-estilo:hover {
+    background: #45a049;
+}
+
+/* Botones Superiores Izquierda (Menú Desplegable) */
+.top-left-buttons {
+    position: fixed;
+    top: 10px;
+    left: 10px;
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+    z-index: 1000;
+}
+
+.dropdown {
+    position: relative;
+    display: inline-block;
+}
+
+.dropdown-content {
+    display: none;
+    position: absolute;
+    left: 0;
+    background-color: #4CAF50;
+    min-width: 160px;
+    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+    z-index: 1001;
+    flex-direction: column;
+    border-radius: 6px;
+    /* --- AÑADIDO: Scroll para el menú si es muy largo --- */
+    max-height: 80vh; /* Altura máxima (80% de la pantalla) */
+    overflow-y: auto; /* Scroll vertical automático */
+}
+
+.dropdown-content button {
+    width: 100%;
+    border: none;
+    background: transparent;
+    color: white;
+    padding: 8px 12px;
+    text-align: left;
+    cursor: pointer;
+}
+
+.dropdown-content button:hover {
+    background-color: #45a049;
+}
+
+.dropdown.show .dropdown-content {
+    display: flex;
+}
+
+.top-left-buttons button {
+    background: #4CAF50;
+    color: white;
+    border: none;
+    padding: 8px 12px;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 0.9em;
+    transition: background 0.2s;
+}
+
+.top-left-buttons button:hover {
+    background: #45a049;
+}
+
+/*
+|============================================================
+| SECCIÓN 2: ESTILOS BASE DE CALCULADORA (APLICABLES A TODAS)
+|============================================================
+*/
+.calculator {
+    display: none;
+    width: 100%;
+   max-width: 100%;
+    height: auto;
+    background: rgba(255,255,255,1);
+    padding: 12px;
+    border-radius: 15px;
+    box-shadow: 0 6px 15px rgba(0,0,0,0.25);
+    margin-bottom: 30px;
+    background-size: cover;
+    background-position: center;
+    position: relative;
+    overflow: hidden;
+}
+
+.calculator.active {
+    display: block;
+}
+
+/* --- Display Base (GENÉRICO) --- */
+.display {
+    width: 100%;
+    height: 45px;
+    background: rgba(255,255,255,0.85);
+    border: 2px solid #ccc;
+    border-radius: 10px;
+    margin-bottom: 12px;
+    font-size: 1.4em;
+    text-align: right;
+    padding: 0 8px;
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    overflow-x: auto;
+    white-space: nowrap;
+    box-sizing: border-box;
+    transition: background 0.3s, color 0.3s;
+}
+
+/* --- Botones Base (GENÉRICO) --- */
+.buttons {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr); /* 4 columnas por defecto */
+    gap: 4px;
+    justify-items: center;
+    transition: opacity 0.3s;
+}
+
+.buttons button {
+    padding: 8px;
+    font-size: 1em;
+    border-radius: 6px;
+    background: rgba(238, 238, 238, 0.85);
+    width: 100%;
+    transition: background 0.3s, color 0.3s;
+}
+
+.buttons button.operator {
+    background: rgba(245, 127, 23, 0.85);
+    color: white;
+}
+
+.buttons button.clear {
+    grid-column: span 4;
+    background: rgba(229, 57, 53, 0.85);
+    color: white;
+}
+
+.buttons button:hover {
+    background: rgba(200, 200, 200, 0.85);
+}
+
+/* --- Estilos de Inputs y Media (GENÉRICO) --- */
+input[type="text"] {
+    width: 100%;
+    padding: 8px;
+    font-size: 0.95em;
+    border-radius: 8px;
+    border: 2px solid #ccc;
+    margin-bottom: 8px;
+}
+
+.calculator img,
+.calculator video {
+    width: 100%;
+    height: auto;
+    object-fit: contain;
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: 0;
+}
+
+/*
+|============================================================
+| SECCIÓN 3: ESTILOS ESPECÍFICOS DE CADA CALCULADORA
+|============================================================
+*/
+
+/* ----------------- CALCULADORA BÁSICA ----------------- */
+#basica {
+    width: 150%;
+    max-width: 380px;
+    margin: auto;
+    padding: 12px;
+}
+
+/* ----------------- CALCULADORA CIENTÍFICA (5 Col. - FX-82 Style) ----------------- */
+#cientifica {
+    width: 100%;
+    max-width: 420px;
+    margin: auto;
+    padding: 15px 18px;
+    background: #34495e; /* CAMBIO: Color de fondo oscuro (Slate) */
+    border-radius: 16px;
+    box-shadow: 0 6px 18px rgba(0, 0, 0, 0.35);
+}
+
+/* Estilo Detallado para la Pantalla (LCD Style 5 Col.) */
+#cientifica .display {
+    background: #c5d7a6; /* CAMBIO: Color LCD para parecerse a la imagen */
+    border: 2px solid #8fa37f;
+    border-radius: 8px; 
+    height: 50px; 
+    font-size: 1.4em;
+    color: #111;
+    font-weight: bold;
+    padding-right: 10px;
+    margin-bottom: 12px;
+    box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.2);
+}
+
+/* GRID específico de 5 columnas para #cientifica */
+#cientifica .buttons {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr); /* CAMBIO CRÍTICO: De 6 a 5 columnas para alinear los números */
+    gap: 5px;
+    justify-items: stretch;
+    align-items: stretch;
+}
+
+/* --- CORRECCIÓN CRÍTICA PARA FX-82 (#cientifica) --- */
+/* 1. Posicionar el botón de Igual (=) para que ocupe 2x2 */
+#cientifica .buttons .equal {
+    grid-row: 7 / span 2; /* Fila 7 (donde empieza el 1, 2, 3) y se extiende por 2 filas */
+    grid-column: 4 / span 2; /* Ocupa las columnas 4 y 5 (las dos últimas) */
+    background-color: #5cb85c; /* Color verde */
+    color: white;
+    font-size: 1.3em;
+    height: auto; 
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 10px;
+    z-index: 10; 
+}
+
+/* 2. Ajustes de color para los botones específicos de esta calculadora */
+#cientifica .buttons button {
+    background-color: #4a657c; /* CAMBIO: Color de botón científico (gris-azul) */
+    color: #e0e0e0;
+    font-size: 0.85em;
+    padding: 5px;
+}
+
+#cientifica .buttons .number-key {
+    background-color: #57738f; /* CAMBIO: Color de botón numérico (un poco más claro) */
+    color: white;
+    font-weight: bold;
+}
+
+#cientifica .buttons .operator,
+#cientifica .buttons .clear {
+    background-color: #e74c3c; /* CAMBIO: Rojo para DEL/AC */
+    color: white;
+}
+
+/* 3. Ajuste del botón 'clear' genérico. Asumo que el HTML usa clases específicas para cada botón (AC, DEL) */
+#cientifica .buttons .clear {
+    grid-column: span 1; /* Por defecto para que no ocupe todo el ancho */
+}
+
+
+/* ----------------- CALCULADORA CIENTÍFICA (CASIO Style - Rojo / Híbrida) ----------------- */
+#cientifica-casio-roja {
+    width: 100%;
+    max-width: 320px; 
+    margin: auto;
+    padding: 15px 15px 20px 15px;
+    background: #a93232; /* Color de cuerpo principal (Rojo oscuro) */
+    border-radius: 12px;
+    box-shadow: 0 8px 15px rgba(0, 0, 0, 0.4);
+}
+
+/* Pantalla específica para el modelo rojo */
+#cientifica-casio-roja .display-panel {
+    background-color: #f7f7e9; 
+    border-radius: 8px;
+    padding: 15px 10px 5px 10px;
+    margin-bottom: 15px;
+    height: 65px;
+    position: relative;
+    box-shadow: inset 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+/* Indicadores (M REG DEG) */
+#cientifica-casio-roja .display-indicators {
+    color: #444;
+    font-size: 0.8em;
+    position: absolute;
+    top: 5px;
+    left: 10px;
+    letter-spacing: 1px;
+}
+
+/* El valor numérico final (0.) */
+#cientifica-casio-roja .display-result {
+    width: 100%;
+    font-size: 2.5em;
+    color: #333;
+    text-align: right;
+    font-family: monospace;
+    font-weight: bold;
+    line-height: 1;
+}
+
+/* --- TECLADO HÍBRIDO --- */
+#cientifica-casio-roja .keypad {
+    display: grid;
+    grid-template-columns: repeat(6, 1fr); /* 6 columnas como base */
+    gap: 7px;
+}
+
+/* Estilo Base del Botón (Rojo) */
+#cientifica-casio-roja .key {
+    background-color: #f0f0f0; /* Color gris claro de los botones */
+    color: #333;
+    border: none;
+    border-radius: 4px;
+    padding: 8px 3px;
+    font-size: 0.85em;
+    font-weight: 500;
+    cursor: pointer;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+    position: relative;
+    height: 38px; /* Altura estándar */
+    text-align: center;
+    line-height: 1.2;
+}
+
+/* Fila 1: SHIFT, ALPHA, MODE */
+.keypad .shift-key, .keypad .alpha-key, .keypad .mode-key {
+    grid-column: span 2; /* Cada uno ocupa 2 columnas de las 6 disponibles */
+    background-color: #e0e0e0;
+    color: #555;
+    font-size: 0.9em;
+}
+
+/* Fila 2: CLR y DEL */
+.keypad .clr-key { 
+    grid-column: 1 / 4; /* CLR ocupa columnas 1, 2 y 3 */
+    background-color: #f5f5f5;
+    color: #333;
+    font-weight: bold;
+}
+.keypad .del-key { 
+    grid-column: 4 / 7; /* DEL ocupa columnas 4, 5 y 6 */
+    background-color: #f0f0f0;
+    color: #d64949; /* Color rojo para DEL */
+    font-size: 1.1em; 
+    font-weight: bold;
+}
+
+/* Fila 3: AC, x!, ^ */
+.keypad .ac-key { 
+    grid-column: 1 / 3; /* AC ocupa columnas 1 y 2 */
+    background-color: #d64949; /* Rojo */
+    color: white;
+    font-weight: bold;
+    font-size: 1.1em; 
+}
+.keypad .x-fact-key {
+    grid-column: 3 / 5; /* x! ocupa columnas 3 y 4 */
+    background-color: #f0f0f0;
+}
+.keypad .pow-key {
+    grid-column: 5 / 7; /* ^ ocupa columnas 5 y 6 */
+    background-color: #f0f0f0;
+}
+
+/* El botón de IGUAL (=) */
+.keypad .equals-key { 
+    grid-row: span 2; /* Ocupa 2 filas de alto */
+    grid-column: 5 / 7; /* Ocupa columnas 5 y 6 */
+    background-color: #5cb85c; /* Color verde */
+    color: white;
+    font-size: 1.5em; 
+    height: auto; 
+    line-height: 1;
+}
+
+/* Las teclas numéricas y operadores deben ser un color un poco más oscuro o tener un borde */
+#cientifica-casio-roja .number-key, 
+#cientifica-casio-roja .op-key {
+    background-color: #ffffff; 
+}
+
+/* ----------------- CALCULADORA GRÁFICA / ESTADÍSTICA ----------------- */
+#grafica {
+    width: 100%;
+    max-width: 500px;
+    margin: auto;
+    padding: 12px;
+}
+#grafica .buttons { grid-template-columns: repeat(4, 1fr); gap: 4px; }
+#canvas-grafica { border: 1px solid #333; border-radius: 8px; margin-top: 10px; background: #fff; width: 100%; height: auto; box-sizing: border-box; }
+
+#estadistica { width: 100%; max-width: 450px; margin: auto; padding: 12px; }
+#estadistica .buttons { grid-template-columns: repeat(4, 1fr); gap: 4px; }
+#resultado-estadistica { margin-top: 10px; font-size: 0.95em; font-weight: bold; }
+
+
+/*
+|============================================================
+| SECCIÓN 3.5: CORRECCIÓN DE LAYOUT PARA CALCULADORAS DE FORMULARIO
+|============================================================
+*/
+
+/*
+ * Esto anula el 'display: grid' por defecto para todas las
+ * calculadoras de formulario que usan <input> y <label>.
+ * (IDs de la lista 7-29, 36, 39, 40)
+*/
+
+#conversor_moneda .buttons,
+#conversor_longitud .buttons,
+#conversor_masa .buttons,
+#conversor_volumen .buttons,
+#conversor_temperatura .buttons,
+#conversor_velocidad .buttons,
+#conversor_tiempo .buttons,
+#conversor_datos .buttons,
+#imc .buttons,
+#calorias_basal .buttons,
+#peso_ideal .buttons,
+#calorias_diarias .buttons,
+#grasa_corporal .buttons,
+#agua_diaria .buttons,
+#calculadora_fechas .buttons,
+#calculadora_edad .buttons,
+#descuento .buttons,
+#propina .buttons,
+#interes_simple .buttons,
+#interes_compuesto .buttons,
+#regla_de_tres .buttons,
+#ecuacion_cuadratica .buttons,
+#calculadora_nutricion .buttons,
+#molaridad .buttons,
+#prestamos .buttons,
+#hipotecaria .buttons {
+    display: flex;
+    flex-direction: column; /* Apila los elementos verticalmente */
+    gap: 10px; /* Un espaciado más adecuado para formularios */
+}
+
+/*
+ * Ajuste de estilo para los elementos de formulario 
+ * dentro de estos layouts (hereda de tu estilo #energia)
+*/
+
+#conversor_moneda input, #conversor_moneda select,
+#conversor_longitud input, #conversor_longitud select,
+#conversor_masa input, #conversor_masa select,
+#conversor_volumen input, #conversor_volumen select,
+#conversor_temperatura input, #conversor_temperatura select,
+#conversor_velocidad input, #conversor_velocidad select,
+#conversor_tiempo input, #conversor_tiempo select,
+#conversor_datos input, #conversor_datos select,
+#imc input, #imc select,
+#calorias_basal input, #calorias_basal select,
+#peso_ideal input, #peso_ideal select,
+#calorias_diarias input, #calorias_diarias select,
+#grasa_corporal input, #grasa_corporal select,
+#agua_diaria input, #agua_diaria select,
+#calculadora_fechas input,
+#calculadora_edad input,
+#descuento input,
+#propina input,
+#interes_simple input,
+#interes_compuesto input,
+#regla_de_tres input,
+#ecuacion_cuadratica input,
+#calculadora_nutricion input, #calculadora_nutricion select,
+#molaridad input, #molaridad select,
+#prestamos input, #prestamos select,
+#hipotecaria input, #hipotecaria select {
+    padding: 6px;
+    border-radius: 6px;
+    border: 2px solid #ccc;
+    font-size: 0.9em;
+    width: 100%;
+}
+
+
+
+/*
+|============================================================
+| SECCIÓN 3.6: CORRECCIÓN DE LAYOUT (FORMULARIOS)
+|============================================================
+*/
+
+/*
+ * Anula el 'display: grid' por defecto para todas las
+ * calculadoras de formulario.
+*/
+#conversor_moneda .buttons,
+#conversor_longitud .buttons,
+#conversor_masa .buttons,
+#conversor_volumen .buttons,
+#conversor_temperatura .buttons,
+#conversor_velocidad .buttons,
+#conversor_tiempo .buttons,
+#conversor_datos .buttons,
+#imc .buttons,
+#calorias_basal .buttons,
+#peso_ideal .buttons,
+#calorias_diarias .buttons,
+#grasa_corporal .buttons,
+#agua_diaria .buttons,
+#calculadora_fechas .buttons,
+#calculadora_edad .buttons,
+#descuento .buttons,
+#propina .buttons,
+#interes_simple .buttons,
+#interes_compuesto .buttons,
+#regla_de_tres .buttons,
+#ecuacion_cuadratica .buttons,
+#calculadora_nutricion .buttons,
+#molaridad .buttons,
+#masa_molar .buttons,
+#balanceo_ecuaciones .buttons,
+#prestamos .buttons,
+#hipotecaria .buttons {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+/*
+ * Estilo unificado para los INPUTS y SELECTS
+ * dentro de esos formularios.
+*/
+#conversor_moneda input, #conversor_moneda select,
+#conversor_longitud input, #conversor_longitud select,
+/* ... (El resto de la lista de inputs que ya tenías) ... */
+#prestamos input, #prestamos select,
+#hipotecaria input, #hipotecaria select {
+    padding: 6px;
+    border-radius: 6px;
+    border: 2px solid #ccc;
+    font-size: 0.9em;
+    width: 100%;
+}
+
+
+/* ----------------- SECCIÓN 4: CALCULADORA PROGRAMADORA (Aislada y Única) ----------------- */
+
+#programadora { 
+    width: 100%; 
+    max-width: 450px; /* Ancho ajustado para la parrilla de 8 columnas */
+    margin: auto; 
+    padding: 15px;
+    background-color: #2c3e50; /* Fondo azul oscuro/gris profesional */
+    border-radius: 10px;
+    box-shadow: 0 0 25px rgba(0,0,0,0.5);
+    transition: all 0.3s ease;
+}
+
+/* Pantalla de Bases (la pantallita pequeña) */
+#programadora .base-display {
+    color: #ecf0f1;
+    font-size: 0.8em;
+    margin-bottom: 10px;
+    padding: 5px 8px;
+    border-radius: 5px;
+    background-color: #1a242f; /* Fondo muy oscuro para el display de bases */
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 5px;
+    text-align: left;
+}
+#programadora .base-display div {
+    /* Aseguramos que los divs internos no hereden estilos raros */
+    padding: 2px 0;
+}
+
+
+/* Pantalla Principal */
+#programadora .display {
+    /* Sobreescribe el estilo genérico de .display para que sea oscuro y visible */
+    background-color: #34495e; 
+    color: #fff;
+    font-size: 1.6em;
+    border: 1px solid #1a242f;
+    min-height: 55px; /* Altura un poco mayor para visibilidad */
+}
+
+/* Botones específicos de la programadora - Usaremos 8 columnas */
+#programadora .buttons { /* Reemplaza .buttons genérico para la programadora */
+    grid-template-columns: repeat(8, 1fr); 
+    gap: 5px;
+}
+
+#programadora .buttons button {
+    height: 40px;
+    font-size: 0.9em;
+    padding: 5px;
+    color: white;
+    transition: background-color 0.1s;
+    /* Reset del background genérico */
+    background: #4a657c; 
+}
+
+/* Estilos por tipo de botón */
+#programadora .mode-btn {
+    background-color: #5cb85c; /* Verde para modos (HEX, DEC, etc.) */
+}
+#programadora .mode-btn:hover {
+    background-color: #4cae4c;
+}
+
+#programadora .operator-btn,
+#programadora .shift-btn {
+    background-color: #f39c12; /* Naranja para operadores/shifts */
+}
+#programadora .operator-btn:hover,
+#programadora .shift-btn:hover {
+    background-color: #e67e22;
+}
+
+#programadora .hex-btn {
+    background-color: #7f8c8d; /* Gris claro para A-F */
+    color: #2c3e50;
+    font-weight: bold;
+}
+#programadora .hex-btn:hover {
+    background-color: #95a5a6;
+}
+
+#programadora .digit-btn {
+    background-color: #9b59b6; /* Morado para dígitos 0-9 */
+}
+#programadora .digit-btn:hover {
+    background-color: #8e44ad;
+}
+
+#programadora .control-btn, 
+#programadora .backspace-btn {
+    background-color: #e74c3c; /* Rojo para C, Backspace */
+}
+#programadora .control-btn:hover, 
+#programadora .backspace-btn:hover {
+    background-color: #c0392b;
+}
+
+/* Ajustes de span */
+#programadora .wide {
+    grid-column: span 2;
+}
+
+/* El botón "=" ocupará toda la última fila (8 columnas) */
+#programadora .full-row {
+    grid-column: span 8; 
+    background-color: #27ae60 !important;
+    font-size: 1.5em !important;
+    height: 50px !important;
+}
+
+
+/* ============================================================
+   CALCULADORA DE ENERGÍA / POTENCIA
+   ============================================================ */
+#energia {
+    background: rgba(255,255,255,1);
+    border-radius: 15px;
+    box-shadow: 0 6px 15px rgba(0,0,0,0.25);
+    padding: 15px;
+    width: 100%;
+    max-width: 400px;
+    margin: auto;
+}
+
+#energia .display {
+    background: #c5d7a6;
+    border: 2px solid #8fa37f;
+    border-radius: 10px;
+    font-size: 1.2em;
+    text-align: center;
+    color: #111;
+    margin-bottom: 10px;
+    font-weight: bold;
+}
+
+#energia .buttons {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 6px;
+    margin-bottom: 15px;
+}
+
+#energia .buttons button {
+    background-color: #4CAF50;
+    color: white;
+    font-size: 0.9em;
+    border: none;
+    border-radius: 6px;
+    padding: 8px;
+    cursor: pointer;
+    transition: background 0.2s;
+}
+
+#energia .buttons button:hover {
+    background-color: #45a049;
+}
+
+#energia .buttons .clear {
+    background-color: #e74c3c;
+}
+
+#energia .buttons .clear:hover {
+    background-color: #c0392b;
+}
+
+#energia .panel {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+#energia .panel label {
+    font-size: 0.9em;
+    font-weight: bold;
+}
+
+#energia input, 
+#energia select {
+    padding: 6px;
+    border-radius: 6px;
+    border: 2px solid #ccc;
+    font-size: 0.9em;
+    width: 100%;
+}
+
+#energia .subpanel {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 6px;
+    margin-top: 10px;
+}
+
+#energia .resultados {
+    margin-top: 12px;
+    background: #f4f4f4;
+    border-radius: 8px;
+    padding: 8px;
+    border: 1px solid #ccc;
+    font-size: 0.9em;
+}
+
+#energia .resultados p {
+    margin: 4px 0;
+}
+
+
+/* IVA / Impuesto */
+#iva .buttons {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+#iva input[type="number"] {
+    padding: 6px;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+    font-size: 16px;
+}
+
+#iva button {
+    padding: 8px;
+    border: none;
+    border-radius: 5px;
+    background-color: var(--accent, #06b6d4);
+    color: white;
+    cursor: pointer;
+    font-size: 16px;
+}
+
+#iva button:hover {
+    background-color: #0288a7;
+}
+
+#resultado-iva {
+    font-weight: bold;
+    font-size: 16px;
+    color: #333;
+}
+
+
+/* Esto arregla el layout de los botones */
+#hipotecaria .buttons {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+/* Esto da estilo a los campos y al desplegable */
+#hipotecaria input, #hipotecaria select {
+    padding: 6px;
+    border-radius: 6px;
+    border: 2px solid #ccc;
+    font-size: 0.9em;
+    width: 100%;
+}
+/*
+|============================================================
+| SECCIÓN 5: ESTILOS RESPONSIVOS
+|============================================================
+*/
+@media (max-width: 1024px) {
+    .calculadora-col { max-width: 360px; }
+    .calculator { max-width: 100%; }
+}
+
+@media (max-width: 768px) {
+    /* Ajustes generales para pantallas pequeñas */
+    .buttons { grid-template-columns: repeat(4, 1fr); } 
+    .buttons button { padding: 6px; font-size: 0.9em; }
+    .display { font-size: 1.2em; height: 40px; }
+
+    .calculator-selector button { padding: 4px 6px; font-size: 0.7em; }
+    #btn-editar-estilo { padding: 4px 6px; font-size: 0.65em; }
+
+    /* Ajuste responsivo para la Programadora: 7 columnas */
+    #programadora { max-width: 100%; padding: 10px; }
+    #programadora .buttons { 
+        grid-template-columns: repeat(7, 1fr); /* Reducimos a 7 columnas en móvil */
+        gap: 3px;
+    }
+    #programadora .full-row {
+        grid-column: span 7; 
+    }
+}
+

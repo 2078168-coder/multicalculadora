@@ -1,0 +1,1244 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Calculadora Multi-Funcional Completa</title>
+    <link rel="stylesheet" href="estilo.css">
+</head>
+<body>
+
+<!-- ===== Botones superiores ===== -->
+<div class="top-left-buttons">
+    <button id="btn-guia">!</button>
+
+    <div class="dropdown" id="btn-calculadoras">
+        <button onclick="toggleDropdown()">Calculadoras ▼</button>
+        <div class="dropdown-content" id="dropdown-calculadoras">
+            <!-- Calculadoras existentes 1-6-->
+            <button onclick="showCalculator('basica')">1-Básica</button>
+            <button onclick="showCalculator('cientifica')">2-Científica</button>
+            <button onclick="showCalculator('programadora')">3-Programadora</button>
+            <button onclick="showCalculator('grafica')">4-Gráfica</button>
+            <button onclick="showCalculator('estadistica')">5-Estadística</button>
+            <button onclick="showCalculator('iva')">6-VA / Impuestos</button>
+           <!-- Calculadoras existentes 7-12-->
+            <button onclick="showCalculator('precio_descuento')">7-Precio con Descuento</button>
+            <button onclick="showCalculator('conversor_longitud')">8-Conversor de Longitud</button>
+            <button onclick="showCalculator('conversor_peso')">9-Conversor de Peso</button>
+            <button onclick="showCalculator('conversor_volumen')">10-Conversor de Volumen</button>
+            <button onclick="showCalculator('conversor_temperatura')">11-Conversor de Temperatura</button>
+            <button onclick="showCalculator('conversor_velocidad')">12-Conversor de Velocidad</button>
+             <!-- Calculadoras existentes 13-18-->
+            <button onclick="showCalculator('conversor_presion')">13-Conversor de Presión</button>
+            <button onclick="showCalculator('conversor_energia')">14-Conversor de Energía / Potencia</button>
+            <button onclick="showCalculator('conversor_moneda')">15-Conversor de Moneda</button>
+            <button onclick="showCalculator('imc')">16-Índice de Masa Corporal (IMC)</button>
+            <button onclick="showCalculator('agua_diaria')">17-Agua Diaria Recomendada</button>
+            <button onclick="showCalculator('calorias_diarias')">18-Calorías Diarias Recom.</button>
+            <!-- Calculadoras existentes 19-24-->
+            <button onclick="showCalculator('area_figuras')">19-Área de Figuras</button>
+            <button onclick="showCalculator('perimetro_figuras')">20-Perímetro de Figuras</button>
+            <button onclick="showCalculator('financiera_basica')">21-Financiera Básica</button>
+            <button onclick="showCalculator('probabilidad_basica')">22-Probabilidad Básica</button>
+            <button onclick="showCalculator('probabilidad_avanzada')">23-Probabilidad Avanzada</button>
+            <button onclick="showCalculator('volumen_solidos')">24-Volumen de Sólidos</button>
+            
+            <button onclick="showCalculator('funciones_trigonom')">25-Funciones Trig. Básicas</button>
+            <button onclick="showCalculator('funciones_trig_inversas')">26-Funciones Trig. Inversas</button>
+            <button onclick="showCalculator('dias_entre_fechas')">27-Días entre Fechas</button>
+            <button onclick="showCalculator('edad_cronologia')">28-Edad / Cronología</button>
+            <button onclick="showCalculator('calculadora_nutricion')">29-Calculadora de Nutrición</button>
+            <button onclick="showCalculator('operaciones_matrices')">30-Operaciones con Matrices</button>
+            
+            <button onclick="showCalculator('determinante_matrices')">31-Determinante de Matrices</button>
+            <button onclick="showCalculator('inversa_matrices')">32-Inversa de Matrices</button>
+            <button onclick="showCalculator('roi_calculator')">33-ROI</button>
+            <button onclick="showCalculator('desviacion_estandar')">34-Desviación Estándar / Varianza</button>
+            <button onclick="showCalculator('regresion_lineal')">35-Regresión Lineal</button>
+            <button onclick="showCalculator('molaridad')">36-Molaridad y Concentración Química</button>
+            
+            <button onclick="showCalculator('masa_molar')">37-Masa Molar de Compuestos</button>
+            <button onclick="showCalculator('balanceo_ecuaciones')">38-Balanceo de Ecuaciones Químicas</button>
+            <button onclick="showCalculator('prestamos')">39-Préstamos / Amortización</button>
+            <button onclick="showCalculator('hipotecaria')">40-Hipotecaria / Créditos</button>
+        </div>
+    </div>
+
+    <button id="btn-editar-tamano">Editar tamaño</button>
+
+    <div id="panel-tamano" style="display:none; position:absolute; top:50px; left:10px; background:#4CAF50; padding:10px; border-radius:8px; z-index:1002;">
+        <label for="select-tamano" style="color:white;">Tamaño de calculadora:</label>
+        <select id="select-tamano">
+            <option value="small">Pequeña</option>
+            <option value="medium" selected>Mediana</option>
+            <option value="large">Grande</option>
+        </select>
+    </div>
+</div>
+
+
+<h1>Multi-Calculadora Beta 0.5</h1>
+
+<button id="btn-editar-estilo" onclick="togglePersonalizacion()">Editar Estilo</button>
+
+<div class="main-container">
+    <div id="calculadoras">
+
+        <!-- CALCULADORA BÁSICA -->
+        <div id="basica" class="calculator active">
+    <div class="display" id="display-basica">0</div>
+    <div class="buttons">
+        <button onclick="appendToDisplay('7')">7</button>
+        <button onclick="appendToDisplay('8')">8</button>
+        <button onclick="appendToDisplay('9')">9</button>
+        <button onclick="chooseOperator('/')">/</button>
+        
+        <button onclick="appendToDisplay('4')">4</button>
+        <button onclick="appendToDisplay('5')">5</button>
+        <button onclick="appendToDisplay('6')">6</button>
+        <button onclick="chooseOperator('*')">*</button>
+        
+        <button onclick="appendToDisplay('1')">1</button>
+        <button onclick="appendToDisplay('2')">2</button>
+        <button onclick="appendToDisplay('3')">3</button>
+        <button onclick="chooseOperator('-')">-</button>
+        
+        <button onclick="appendToDisplay('0')">0</button>
+        <button onclick="appendToDisplay('.')">.</button>
+        <button onclick="calculateResult()" class="operator">=</button>
+        <button onclick="chooseOperator('+')">+</button>
+        
+        <button onclick="clearBasicCalculator()" class="clear">C</button>
+    </div>
+</div>
+
+        <!-- CALCULADORA CIENTÍFICA -->
+        <div id="cientifica" class="calculator cientifica">
+            <div class="display" id="display-cientifica">0</div>
+            <div class="buttons">
+                <button onclick="appendValue('cientifica','SHIFT')">SHIFT</button>
+                <button onclick="appendValue('cientifica','ALPHA')">ALPHA</button>
+                <button onclick="appendValue('cientifica','MODE')">MODE</button>
+                <button onclick="clearDisplay('cientifica')">CLR</button>
+                <button onclick="appendValue('cientifica','!')">x!</button>
+                <button onclick="appendValue('cientifica','nPr')">nPr</button>
+                <button onclick="appendValue('cientifica','nCr')">nCr</button>
+                <button onclick="appendValue('cientifica','1/')">x⁻¹</button>
+                <button onclick="appendValue('cientifica','**2')">x²</button>
+                <button onclick="appendValue('cientifica','Math.sqrt(')">√</button>
+                <button onclick="appendValue('cientifica','**')">^</button>
+                <button onclick="appendValue('cientifica','Math.log10(')">log</button>
+                <button onclick="appendValue('cientifica','Math.log(')">ln</button>
+                <button onclick="appendValue('cientifica','Math.pow(10,')">10ˣ</button>
+                <button onclick="appendValue('cientifica','Math.exp(')">EXP</button>
+                <button onclick="appendValue('cientifica','(')">(</button>
+                <button onclick="appendValue('cientifica',')')">)</button>
+                <button onclick="appendValue('cientifica','Math.sin(')">sin</button>
+                <button onclick="appendValue('cientifica','Math.cos(')">cos</button>
+                <button onclick="appendValue('cientifica','Math.tan(')">tan</button>
+                <button onclick="appendValue('cientifica','RCL')">RCL</button>
+                <button onclick="appendValue('cientifica','hyp')">hyp</button>
+                <button onclick="appendValue('cientifica','Math.asin(')">sin⁻¹</button>
+                <button onclick="appendValue('cientifica','Math.acos(')">cos⁻¹</button>
+                <button onclick="appendValue('cientifica','Math.atan(')">tan⁻¹</button>
+                <button onclick="appendValue('cientifica','ENG')">ENG</button>
+                <button onclick="appendValue('cientifica','Math.PI')">π</button>
+                <button onclick="appendValue('cientifica','M+')">M+</button>
+                <button onclick="deleteLast('cientifica')">DEL</button>
+                <button onclick="clearDisplay('cientifica')">AC</button>
+                <button onclick="appendValue('cientifica','7')">7</button>
+                <button onclick="appendValue('cientifica','8')">8</button>
+                <button onclick="appendValue('cientifica','9')">9</button>
+                <button onclick="appendValue('cientifica','*')">×</button>
+                <button onclick="appendValue('cientifica','+')">+</button>
+                <button onclick="appendValue('cientifica','4')">4</button>
+                <button onclick="appendValue('cientifica','5')">5</button>
+                <button onclick="appendValue('cientifica','6')">6</button>
+                <button onclick="appendValue('cientifica','/')">÷</button>
+                <button onclick="appendValue('cientifica','-')">−</button>
+                <button onclick="appendValue('cientifica','1')">1</button>
+                <button onclick="appendValue('cientifica','2')">2</button>
+                <button onclick="appendValue('cientifica','3')">3</button>
+                <button onclick="appendValue('cientifica','.')">.</button>
+                <button onclick="appendValue('cientifica','Math.exp(')">EXP</button>
+                <button onclick="appendValue('cientifica','Ans')">Ans</button>
+                <button onclick="appendValue('cientifica','0')">0</button>
+                <button onclick="calculateResult('cientifica')">=</button>
+            </div>
+        </div>
+
+        <!-- CALCULADORA PROGRAMADORA -->
+        <div id="programadora" class="calculator">
+            <div class="base-display">
+                <div id="hex-val-prog">HEX: 0</div>
+                <div id="dec-val-prog">DEC: 0</div>
+                <div id="oct-val-prog">OCT: 0</div>
+                <div id="bin-val-prog">BIN: 0</div>
+            </div>
+            <div class="display" id="display-programadora">0</div>
+            <div class="buttons prog-buttons">
+                <button class="mode-btn" onclick="setBaseProg('HEX')">HEX</button>
+                <button class="mode-btn" onclick="setBaseProg('DEC')">DEC</button>
+                <button class="mode-btn" onclick="setBaseProg('OCT')">OCT</button>
+                <button class="mode-btn" onclick="setBaseProg('BIN')">BIN</button>
+                <button class="operator-btn" onclick="operateProg('&')">AND</button>
+                <button class="operator-btn" onclick="operateProg('|')">OR</button>
+                <button class="operator-btn" onclick="operateProg('^')">XOR</button>
+                <button class="operator-btn" onclick="operateProg('~')">NOT</button>
+                <button class="hex-btn" onclick="appendValueProg('A')">A</button>
+                <button class="hex-btn" onclick="appendValueProg('B')">B</button>
+                <button class="hex-btn" onclick="appendValueProg('C')">C</button>
+                <button class="hex-btn" onclick="appendValueProg('D')">D</button>
+                <button class="hex-btn" onclick="appendValueProg('E')">E</button>
+                <button class="hex-btn" onclick="appendValueProg('F')">F</button>
+                <button class="operator-btn" onclick="operateProg('/')">/</button>
+                <button class="operator-btn" onclick="operateProg('*')">*</button>
+                <button class="control-btn" onclick="clearDisplayProg()">C</button>
+                <button class="backspace-btn" onclick="backspaceProg()">&#x232B;</button>
+
+                <button class="digit-btn" onclick="appendValueProg('6')">6</button>
+                <button class="digit-btn" onclick="appendValueProg('7')">7</button>
+                <button class="digit-btn" onclick="appendValueProg('8')">8</button>
+                <button class="digit-btn" onclick="appendValueProg('9')">9</button>
+                <button class="operator-btn" onclick="operateProg('-')">-</button>
+                <button class="operator-btn" onclick="operateProg('+')">+</button>
+                <button class="shift-btn" onclick="operateProg('>>')">RSH</button>
+                <button class="shift-btn" onclick="operateProg('<<')">LSH</button>
+
+                <button class="digit-btn" onclick="appendValueProg('1')">1</button>
+                <button class="digit-btn" onclick="appendValueProg('2')">2</button>
+                <button class="digit-btn" onclick="appendValueProg('3')">3</button>
+                <button class="digit-btn" onclick="appendValueProg('4')">4</button>
+                <button class="digit-btn" onclick="appendValueProg('5')">5</button>
+                <button class="digit-btn wide" onclick="appendValueProg('0')">0</button>
+
+                <button class="operator-btn full-row" onclick="calculateProg()">=</button>
+            </div>
+        </div>
+
+        <!-- CALCULADORA GRÁFICA -->
+        <div id="grafica" class="calculator">
+            <div class="display" id="display-grafica">y = </div>
+            <div class="buttons">
+                <input type="text" id="input-grafica" placeholder="Escribe función f(x)">
+                <button onclick="graficar()">Graficar</button>
+                <button onclick="clearDisplay('grafica')">C</button>
+            </div>
+            <div id="canvas-container" style="width:100%; height:400px; margin-top:20px;">
+                <canvas id="canvas-grafica"></canvas>
+            </div>
+        </div>
+
+        <!-- CALCULADORA ESTADÍSTICA -->
+        <div id="estadistica" class="calculator">
+            <div class="display" id="display-estadistica">0</div>
+            <div class="buttons">
+                <input type="text" id="input-estadistica" placeholder="Números separados por ,">
+                <button onclick="calcularEstadistica()">Calcular</button>
+                <button onclick="clearDisplay('estadistica')">C</button>
+                <div id="resultado-estadistica" style="margin-top:10px;"></div>
+            </div>
+        </div>
+
+        <!-- CALCULADORA IVA/IMPUESTOS -->
+        <div id="iva" class="calculator">
+            <div class="display" id="display-iva">0</div>
+            <div class="buttons">
+                <input type="number" id="input-monto" placeholder="Monto base">
+                <input type="number" id="input-iva" placeholder="% IVA" value="13">
+                <button onclick="calcularIVA()">Calcular IVA</button>
+                <button onclick="calcularTotal()">Calcular Total</button>
+                <button onclick="limpiarIVA()">Limpiar</button>
+            </div>
+            <div id="resultado-iva" style="margin-top:10px;"></div>
+        </div>
+
+    </div> <!-- FIN DIV CALCULADORAS -->
+
+    <!-- ============================================================
+   PARTE 2: CALCULADORAS 7 A 11
+   ============================================================ -->
+
+<div id="otras-calculadoras-7-11">
+
+    <!-- Calculadora 7: Precio con Descuento -->
+  <div id="precio_descuento" class="calculator">
+    
+    <div class="display" id="display-precio_descuento">0</div>
+    
+    <div class="buttons">
+        <label for="precio-original-desc">Precio Original:</label>
+        
+        <input type="number" id="precio-original-desc" placeholder="Ej. 100">
+
+        <label for="porcentaje-desc">Porcentaje de Descuento (%):</label>
+        
+        <input type="number" id="porcentaje-desc" placeholder="Ej. 15">
+
+        <button onclick="calcularPrecioDescuento()">Calcular</button>
+        <button onclick="limpiarPrecioDescuento()">C</button>
+    </div>
+    
+    <div id="resultado-precio_descuento" style="margin-top:10px;"></div>
+</div>
+
+    <!-- Calculadora 8: Conversor de Longitud -->
+    <div id="conversor_longitud" class="calculator">
+        <div class="display" id="display-conversor_longitud">0</div>
+        <div class="buttons">
+            <input type="number" id="input-longitud" placeholder="Cantidad">
+            <select id="select-unidad-origen">
+                <option value="m">Metros</option>
+                <option value="km">Kilómetros</option>
+                <option value="cm">Centímetros</option>
+                <option value="mm">Milímetros</option>
+                <option value="ft">Pies</option>
+                <option value="in">Pulgadas</option>
+            </select>
+            <select id="select-unidad-destino">
+                <option value="m">Metros</option>
+                <option value="km">Kilómetros</option>
+                <option value="cm">Centímetros</option>
+                <option value="mm">Milímetros</option>
+                <option value="ft">Pies</option>
+                <option value="in">Pulgadas</option>
+            </select>
+            <button onclick="convertirLongitud()">Convertir</button>
+            <button onclick="clearDisplay('conversor_longitud')">C</button>
+        </div>
+        <div id="resultado-conversor_longitud" style="margin-top:10px;"></div>
+    </div>
+
+    <!-- Calculadora 9: Conversor de Peso -->
+    <div id="conversor_peso" class="calculator">
+        <div class="display" id="display-conversor_peso">0</div>
+        <div class="buttons">
+            <input type="number" id="input-peso" placeholder="Cantidad">
+            <select id="select-peso-origen">
+                <option value="kg">Kilogramos</option>
+                <option value="g">Gramos</option>
+                <option value="lb">Libras</option>
+                <option value="oz">Onzas</option>
+            </select>
+            <select id="select-peso-destino">
+                <option value="kg">Kilogramos</option>
+                <option value="g">Gramos</option>
+                <option value="lb">Libras</option>
+                <option value="oz">Onzas</option>
+            </select>
+            <button onclick="convertirPeso()">Convertir</button>
+            <button onclick="clearDisplay('conversor_peso')">C</button>
+        </div>
+        <div id="resultado-conversor_peso" style="margin-top:10px;"></div>
+    </div>
+
+    <!-- Calculadora 10: Conversor de Volumen -->
+    <div id="conversor_volumen" class="calculator">
+        <div class="display" id="display-conversor_volumen">0</div>
+        <div class="buttons">
+            <input type="number" id="input-volumen" placeholder="Cantidad">
+            <select id="select-volumen-origen">
+                <option value="l">Litros</option>
+                <option value="ml">Mililitros</option>
+                <option value="gal">Galones</option>
+                <option value="cup">Tazas</option>
+            </select>
+            <select id="select-volumen-destino">
+                <option value="l">Litros</option>
+                <option value="ml">Mililitros</option>
+                <option value="gal">Galones</option>
+                <option value="cup">Tazas</option>
+            </select>
+            <button onclick="convertirVolumen()">Convertir</button>
+            <button onclick="clearDisplay('conversor_volumen')">C</button>
+        </div>
+        <div id="resultado-conversor_volumen" style="margin-top:10px;"></div>
+    </div>
+
+    <!-- Calculadora 11: Conversor de Temperatura -->
+    <div id="conversor_temperatura" class="calculator">
+        <div class="display" id="display-conversor_temperatura">0</div>
+        <div class="buttons">
+            <input type="number" id="input-temperatura" placeholder="Cantidad">
+            <select id="select-temperatura-origen">
+                <option value="C">Celsius</option>
+                <option value="F">Fahrenheit</option>
+                <option value="K">Kelvin</option>
+            </select>
+            <select id="select-temperatura-destino">
+                <option value="C">Celsius</option>
+                <option value="F">Fahrenheit</option>
+                <option value="K">Kelvin</option>
+            </select>
+            <button onclick="convertirTemperatura()">Convertir</button>
+            <button onclick="clearDisplay('conversor_temperatura')">C</button>
+        </div>
+        <div id="resultado-conversor_temperatura" style="margin-top:10px;"></div>
+    </div>
+
+</div>
+ 
+
+
+      <!-- Calculadora 12: Conversor de Velocidad -->
+    <div id="conversor_velocidad" class="calculator">
+    <div class="display" id="display-conversor_velocidad">0</div>
+    <div class="buttons">
+        <input type="number" id="input-velocidad" placeholder="Cantidad">
+        <select id="select-velocidad-origen">
+            <option value="m/s">m/s</option>
+            <option value="km/h">km/h</option>
+            <option value="mi/h">mi/h</option>
+            <option value="ft/s">ft/s</option>
+        </select>
+        <select id="select-velocidad-destino">
+            <option value="m/s">m/s</option>
+            <option value="km/h">km/h</option>
+            <option value="mi/h">mi/h</option>
+            <option value="ft/s">ft/s</option>
+        </select>
+        <button onclick="convertirVelocidad()">Convertir</button>
+        <button onclick="clearDisplay('conversor_velocidad')">C</button>
+    </div>
+    <div id="resultado-conversor_velocidad" style="margin-top:10px;"></div>
+</div>
+
+
+     <!-- Calculadora 13: Conversor de Presion -->
+    <div id="conversor_presion" class="calculator">
+    <div class="display" id="display-conversor_presion">0</div>
+    <div class="buttons">
+        <input type="number" id="input-presion" placeholder="Cantidad">
+        <select id="select-presion-origen">
+            <option value="Pa">Pa</option>
+           <option value="kPa">kPa</option> <option value="bar">bar</option>
+            <option value="atm">atm</option>
+            <option value="mmHg">mmHg</option>
+            <option value="psi">psi</option>
+        </select>
+        <select id="select-presion-destino">
+            <option value="Pa">Pa</option>
+          <option value="kPa">kPa</option> <option value="bar">bar</option>
+            <option value="atm">atm</option>
+            <option value="mmHg">mmHg</option>
+            <option value="psi">psi</option>
+        </select>
+        <button onclick="convertirPresion()">Convertir</button>
+        <button onclick="clearDisplay('conversor_presion')">C</button>
+    </div>
+    <div id="resultado-conversor_presion" style="margin-top:10px;"></div>
+</div>
+
+
+
+    <!-- Calculadora 14: Conversor de Energia/Potencia-->
+<div id="conversor_energia" class="calculator">
+    <div class="display" id="display-conversor_energia">0</div>
+    <div class="buttons">
+        
+        <label for="input-energia">Cantidad:</label>
+        <input type="number" id="input-energia" placeholder="Introduce valor">
+
+        <label for="select-energia-origen">De:</label>
+        <select id="select-energia-origen">
+            <option value="J">Joules (J)</option>
+            <option value="kJ">Kilojoules (kJ)</option>
+            <option value="kcal">Kilocalorías (kcal)</option>
+            <option value="cal">Calorías (cal)</option>
+            <option value="Wh">Watt-hora (Wh)</option>
+        </select>
+
+        <label for="select-energia-destino">A:</label>
+        <select id="select-energia-destino">
+            <option value="J">Joules (J)</option>
+            <option value="kJ">Kilojoules (kJ)</option>
+            <option value="kcal">Kilocalorías (kcal)</option>
+            <option value="cal">Calorías (cal)</option>
+            <option value="Wh">Watt-hora (Wh)</option>
+        </select>
+
+        <button onclick="convertirEnergia()">Convertir</button>
+        <button onclick="clearDisplay('conversor_energia')">C</button>
+    </div>
+    <div id="resultado-conversor_energia" style="margin-top:10px;"></div>
+</div>
+
+    
+    <!-- Calculadora 15: Conversor de moneda-->
+    <div id="conversor_moneda" class="calculator">
+    <div class="display" id="display-conversor_moneda">0</div>
+    <div class="buttons">
+        
+        <label for="input-moneda">Cantidad:</label>
+        <input type="number" id="input-moneda" placeholder="Introduce valor">
+
+        <label for="select-moneda-origen">De:</label>
+        <select id="select-moneda-origen">
+            <option value="USD">Dólar (USD)</option>
+            <option value="EUR">Euro (EUR)</option>
+            <option value="MXN">Peso Mexicano (MXN)</option>
+            <option value="ARS">Peso Argentino (ARS)</option>
+            <option value="COP">Peso Colombiano (COP)</option>
+            <option value="SVC">Colón Salvadoreño (SVC)</option>
+            <option value="JPY">Yen Japonés (JPY)</option>
+            <option value="GBP">Libra Esterlina (GBP)</option>
+            <option value="CAD">Dólar Canadiense (CAD)</option>
+            <option value="GTQ">Quetzal (GTQ)</option>
+            <option value="BRL">Real Brasileño (BRL)</option>
+        </select>
+
+        <label for="select-moneda-destino">A:</label>
+        <select id="select-moneda-destino">
+            <option value="USD">Dólar (USD)</option>
+            <option value="EUR">Euro (EUR)</option>
+            <option value="MXN">Peso Mexicano (MXN)</option>
+            <option value="ARS">Peso Argentino (ARS)</option>
+            <option value="COP">Peso Colombiano (COP)</option>
+            <option value="SVC">Colón Salvadoreño (SVC)</option>
+            <option value="JPY">Yen Japonés (JPY)</option>
+            <option value="GBP">Libra Esterlina (GBP)</option>
+            <option value="CAD">Dólar Canadiense (CAD)</option>
+            <option value="GTQ">Quetzal (GTQ)</option>
+            <option value="BRL">Real Brasileño (BRL)</option>
+        </select>
+
+        <button onclick="convertirMoneda()">Convertir</button>
+        <button onclick="clearDisplay('conversor_moneda')">C</button>
+    </div>
+    <div id="resultado-conversor_moneda" style="margin-top:10px;"></div>
+</div>
+
+    
+
+    <!-- Calculadora 16: Índice de Masa Corporal (IMC) -->
+   <div id="imc" class="calculator">
+    <div class="display" id="display-imc">0</div>
+    <div class="buttons">
+        
+        <label for="input-imc-altura">Altura (en cm):</label>
+        <input type="number" id="input-imc-altura" placeholder="Ej: 170">
+
+        <label for="input-imc-peso">Peso (en kg):</label>
+        <input type="number" id="input-imc-peso" placeholder="Ej: 70">
+
+        <button onclick="calcularIMC()">Calcular</button>
+        <button onclick="limpiarIMC()">C</button>
+    </div>
+    <div id="resultado-imc" style="margin-top:10px;"></div>
+</div>
+
+    
+
+    <!-- Calculadora 17: Agua Diaria Recomendada -->
+   <div id="agua_diaria" class="calculator">
+    <div class="display" id="display-agua_diaria">0</div>
+    <div class="buttons">
+        
+        <label for="input-agua-peso">Tu Peso (en kg):</label>
+        <input type="number" id="input-agua-peso" placeholder="Ej: 70">
+
+        <label for="select-agua-actividad">Nivel de Actividad:</label>
+        <select id="select-agua-actividad">
+            <option value="sedentario">Sedentario (poco ejercicio)</option>
+            <option value="ligera" selected>Ligera (caminatas)</option>
+            <option value="moderada">Moderada (3-5 días/sem ejercicio)</option>
+            <option value="intensa">Intensa (ejercicio diario)</option>
+        </select>
+
+        <button onclick="calcularAguaDiaria()">Calcular</button>
+        <button onclick="limpiarAgua()">C</button>
+    </div>
+    <div id="resultado-agua_diaria" style="margin-top:10px;"></div>
+</div>
+
+
+        <!-- Calculadora 18: Calorías Diarias Recomendadas -->
+   <div id="calorias_diarias" class="calculator">
+    <div class="display" id="display-calorias_diarias">0</div>
+    <div class="buttons">
+        
+        <label for="input-calorias-peso">Peso (kg):</label>
+        <input type="number" id="input-calorias-peso" placeholder="Ej: 70">
+
+        <label for="input-calorias-altura">Altura (cm):</label>
+        <input type="number" id="input-calorias-altura" placeholder="Ej: 170">
+
+        <label for="input-calorias-edad">Edad:</label>
+        <input type="number" id="input-calorias-edad" placeholder="Ej: 30">
+
+        <label for="select-calorias-genero">Género:</label>
+        <select id="select-calorias-genero">
+            <option value="mujer" selected>Mujer</option>
+            <option value="hombre">Hombre</option>
+        </select>
+
+        <label for="select-calorias-actividad">Nivel de Actividad:</label>
+        <select id="select-calorias-actividad">
+            <option value="sedentario" selected>Sedentario (poco ejercicio)</option>
+            <option value="ligero">Ligero (1-3 días/sem)</option>
+            <option value="moderado">Moderado (3-5 días/sem)</option>
+            <option value="activo">Activo (6-7 días/sem)</option>
+            <option value="muy_activo">Muy Activo (trabajo físico)</option>
+        </select>
+
+        <button onclick="calcularCaloriasDiarias()">Calcular</button>
+        <button onclick="limpiarCalorias()">C</button>
+    </div>
+    <div id="resultado-calorias_diarias" style="margin-top:10px;"></div>
+</div>
+
+        <!-- Calculadora 19: Área de Figuras -->
+    <div id="area_figuras" class="calculator">
+    <div class="display" id="display-area_figuras">0</div>
+    <div class="buttons">
+        <label for="tipo-figura-area">Tipo de figura:</label>
+        <select id="tipo-figura-area">
+            <option value="cuadrado">Cuadrado</option>
+            <option value="rectangulo">Rectángulo</option>
+            <option value="triangulo">Triángulo</option>
+            <option value="circulo">Círculo</option>
+        </select>
+
+        <label for="dim1-area">Dimensión 1 (cm):</label>
+        <input type="number" id="dim1-area" placeholder="Ej. lado, base o radio">
+
+        <label for="dim2-area">Dimensión 2 (cm) [si aplica]:</label>
+        <input type="number" id="dim2-area" placeholder="Ej. altura o dejar en 0">
+
+        <button onclick="calcularArea()">Calcular Área</button>
+        <button onclick="clearDisplay('area_figuras')">C</button>
+    </div>
+    <div id="resultado-area_figuras" style="margin-top:10px; font-weight:bold;"></div>
+</div>
+
+        <!-- Calculadora 20: Perímetro de Figuras -->
+    <div id="perimetro_figuras" class="calculator">
+    <div class="display" id="display-perimetro_figuras">0</div>
+    <div class="buttons">
+        <label for="tipo-figura-perimetro">Tipo de figura:</label>
+        <select id="tipo-figura-perimetro">
+            <option value="cuadrado">Cuadrado</option>
+            <option value="rectangulo">Rectángulo</option>
+            <option value="triangulo">Triángulo</option>
+            <option value="circulo">Círculo</option>
+        </select>
+
+        <label for="dim1-perimetro">Dimensión 1 (cm):</label>
+        <input type="number" id="dim1-perimetro" placeholder="Ej. lado, base o radio">
+
+        <label for="dim2-perimetro">Dimensión 2 (cm) [si aplica]:</label>
+        <input type="number" id="dim2-perimetro" placeholder="Ej. altura o dejar en 0">
+
+        <button onclick="calcularPerimetro()">Calcular Perímetro</button>
+                <button onclick="limpiarArea()">C</button>
+    </div>
+    <div id="resultado-perimetro_figuras" style="margin-top:10px; font-weight:bold;"></div>
+</div>
+
+        <!-- Calculadora 21: Financiera Básica -->
+    <div id="financiera_basica" class="calculator">
+    <div class="display" id="display-financiera_basica">0</div>
+    <div class="buttons">
+        
+        <label for="input-finanzas-capital">Capital Inicial ($):</label>
+        <input type="number" id="input-finanzas-capital" placeholder="Ej: 1000">
+
+        <label for="input-finanzas-tasa">Tasa de Interés Anual (%):</label>
+        <input type="number" id="input-finanzas-tasa" placeholder="Ej: 5">
+
+        <label for="input-finanzas-tiempo">Tiempo (Años):</label>
+        <input type="number" id="input-finanzas-tiempo" placeholder="Ej: 3">
+        
+        <button onclick="calcularInteresSimple()">Calcular Interés</button>
+        <button onclick="limpiarFinanzas()">C</button>
+    </div>
+    <div id="resultado-financiera_basica" style="margin-top:10px;"></div>
+</div>
+
+    
+        <!-- Calculadora 22: Probabilidad Básica -->
+   <div id="probabilidad_basica" class="calculator">
+    <div class="display" id="display-probabilidad_basica">0</div>
+    <div class="buttons">
+        
+        <label for="input-prob-favorables">Casos Favorables:</label>
+        <input type="number" id="input-prob-favorables" placeholder="Ej: 1 (sacar un 6 en un dado)">
+
+        <label for="input-prob-totales">Casos Totales (Espacio Muestral):</label>
+        <input type="number" id="input-prob-totales" placeholder="Ej: 6 (lados del dado)">
+        
+        <button onclick="calcularProbabilidadBasica()">Calcular Probabilidad</button>
+        <button onclick="limpiarProbabilidadBasica()">C</button>
+    </div>
+    <div id="resultado-probabilidad_basica" style="margin-top:10px;"></div>
+</div>
+
+    
+        <!-- Calculadora 23: Probabilidad Avanzada -->
+   <div id="probabilidad_avanzada" class="calculator">
+    <div class="display" id="display-probabilidad_avanzada">0</div>
+    <div class="buttons">
+        
+        <label for="input-perm-n">n (Total de elementos):</label>
+        <input type="number" id="input-perm-n" placeholder="Ej: 10 (personas)">
+
+        <label for="input-perm-k">k (Elementos a ordenar):</label>
+        <input type="number" id="input-perm-k" placeholder="Ej: 3 (puestos)">
+        
+        <button onclick="calcularPermutacion()">Calcular Permutación</button>
+        <button onclick="limpiarPermutacion()">C</button>
+    </div>
+    <div id="resultado-probabilidad_avanzada" style="margin-top:10px;"></div>
+</div>
+
+    
+        <!-- Calculadora 24: Volumen de Sólidos -->
+   <div id="volumen_solidos" class="calculator">
+    <div class="display" id="display-volumen_solidos">0</div>
+    <div class="buttons">
+        
+        <label for="select-volumen-figura">Sólido:</label>
+        <select id="select-volumen-figura" onchange="limpiarVolumen()"> 
+            <option value="cubo" selected>Cubo (Lado)</option>
+            <option value="esfera">Esfera (Radio)</option>
+            <option value="cilindro">Cilindro (Radio y Altura)</option>
+        </select>
+
+        <label for="input-volumen-param1">Dimensión 1 (Lado / Radio):</label>
+        <input type="number" id="input-volumen-param1" placeholder="Ej: 5">
+
+        <label for="input-volumen-param2">Dimensión 2 (Altura):</label>
+        <input type="number" id="input-volumen-param2" placeholder="Ej: 10 (Solo para Cilindro)">
+        
+        <button onclick="calcularVolumen()">Calcular Volumen</button>
+        <button onclick="limpiarVolumen()">C</button> 
+    </div>
+    <div id="resultado-volumen_solidos" style="margin-top:10px;"></div>
+</div>
+
+    
+        <!-- Calculadora 25: Funciones Trigonométricas Básicas -->
+   <div id="funciones_trigonom" class="calculator">
+    <div class="display" id="display-funciones_trigonom">0</div>
+    <div class="buttons">
+        
+        <label for="input-trig-angulo">Ángulo:</label>
+        <input type="number" id="input-trig-angulo" placeholder="Ej: 45">
+
+        <label for="select-trig-unidad">Unidad:</label>
+        <select id="select-trig-unidad">
+            <option value="grados" selected>Grados (°)</option>
+            <option value="radianes">Radianes (rad)</option>
+        </select>
+        
+        <button onclick="calcularTrigonometria()">Calcular Seno/Coseno/Tan</button>
+        <button onclick="limpiarTrigonometria()">C</button>
+    </div>
+    <div id="resultado-funciones_trigonom" style="margin-top:10px;"></div>
+</div>
+    
+        <!-- Calculadora 26: Funciones Trigonométricas inversas -->
+   <div id="funciones_trig_inversas" class="calculator">
+    <div class="display" id="display-funciones_trig_inversas">0</div>
+    <div class="buttons">
+        
+        <label for="input-trig-valor">Valor Decimal (entre -1 y 1):</label>
+        <input type="number" id="input-trig-valor" placeholder="Ej: 0.5 (Seno de un ángulo)">
+        
+        <button onclick="calcularTrigonometriaInversa()">Calcular Inversas</button>
+        <button onclick="limpiarTrigonometriaInversa()">C</button>
+    </div>
+    <div id="resultado-funciones_trig_inversas" style="margin-top:10px;"></div>
+</div>
+
+   <div id="dias_entre_fechas" class="calculator">
+    <div class="display" id="display-dias_entre_fechas">0</div>
+    <div class="buttons">
+        
+        <label for="input-fecha1">Fecha Inicial:</label>
+        <input type="date" id="input-fecha1">
+
+        <label for="input-fecha2">Fecha Final:</label>
+        <input type="date" id="input-fecha2">
+        
+        <button onclick="calcularDiasEntreFechas()">Calcular Días</button>
+        <button onclick="limpiarDiasEntreFechas()">C</button>
+    </div>
+    <div id="resultado-dias_entre_fechas" style="margin-top:10px;"></div>
+</div>
+
+    
+        <!-- Calculadora 28: Edad / Cronología -->
+   <div id="edad_cronologia" class="calculator">
+    <div class="display" id="display-edad_cronologia">0</div>
+    <div class="buttons">
+        
+        <label for="input-fecha-nacimiento">Fecha de Nacimiento:</label>
+        <input type="date" id="input-fecha-nacimiento">
+
+        <label for="input-fecha-comparacion">Comparar con Fecha (Dejar vacío para HOY):</label>
+        <input type="date" id="input-fecha-comparacion">
+        
+        <button onclick="calcularEdad()">Calcular Edad/Tiempo</button>
+        <button onclick="limpiarEdadCronologia()">C</button>
+    </div>
+    <div id="resultado-edad_cronologia" style="margin-top:10px;"></div>
+</div>
+    
+        <!-- Calculadora 29: Calculadora de Nutrición-->
+   <div id="calculadora_nutricion" class="calculator">
+    <div class="display" id="display-calculadora_nutricion">0</div>
+    <div class="buttons">
+        
+        <label for="input-nutri-genero">Género:</label>
+        <select id="select-nutri-genero">
+            <option value="hombre" selected>Hombre</option>
+            <option value="mujer">Mujer</option>
+        </select>
+
+        <label for="input-nutri-peso">Peso (kg):</label>
+        <input type="number" id="input-nutri-peso" placeholder="Ej: 75">
+
+        <label for="input-nutri-altura">Altura (cm):</label>
+        <input type="number" id="input-nutri-altura" placeholder="Ej: 180">
+        
+        <label for="input-nutri-edad">Edad (años):</label>
+        <input type="number" id="input-nutri-edad" placeholder="Ej: 30">
+        
+        <label for="select-nutri-actividad">Nivel de Actividad:</label>
+        <select id="select-nutri-actividad">
+            <option value="sedentaria" selected>Sedentaria (Poco o ningún ejercicio)</option>
+            <option value="ligera">Ligera (Ejercicio ligero 1-3 días/sem)</option>
+            <option value="moderada">Moderada (Ejercicio moderado 3-5 días/sem)</option>
+            <option value="alta">Alta (Ejercicio fuerte 6-7 días/sem)</option>
+            <option value="extrema">Extrema (Doble jornada o trabajo muy físico)</option>
+        </select>
+
+        <button onclick="calcularTDEE()">Calcular TDEE</button>
+        <button onclick="limpiarNutricion()">C</button>
+    </div>
+    <div id="resultado-calculadora_nutricion" style="margin-top:10px;"></div>
+</div>
+
+    
+        <!-- Calculadora 30: Operaciones con Matrices: -->
+<div id="operaciones_matrices" class="calculator">
+    <div class="display" id="display-operaciones_matrices">0</div>
+    <div class="buttons">
+        
+        <label for="select-matriz-operacion">Operación:</label>
+        <select id="select-matriz-operacion">
+            <option value="suma" selected>Suma (+)</option>
+            <option value="resta">Resta (-)</option>
+        </select>
+        
+        <div style="display:flex; justify-content: space-around; gap: 10px;">
+            <div>
+                <h4>Matriz A</h4>
+                <table class="matrix-input-table">
+                    <tr><td><input type="number" id="a11" placeholder="a11"></td><td><input type="number" id="a12" placeholder="a12"></td></tr>
+                    <tr><td><input type="number" id="a21" placeholder="a21"></td><td><input type="number" id="a22" placeholder="a22"></td></tr>
+                </table>
+            </div>
+
+            <div>
+                <h4>Matriz B</h4>
+                <table class="matrix-input-table">
+                    <tr><td><input type="number" id="b11" placeholder="b11"></td><td><input type="number" id="b12" placeholder="b12"></td></tr>
+                    <tr><td><input type="number" id="b21" placeholder="b21"></td><td><input type="number" id="b22" placeholder="b22"></td></tr>
+                </table>
+            </div>
+        </div>
+
+        <button onclick="calcularMatrices()" style="margin-top: 15px;">Calcular Matriz</button>
+        <button onclick="limpiarMatrices()">C</button>
+    </div>
+    <div id="resultado-operaciones_matrices" style="margin-top:10px;"></div>
+</div>
+    
+        <!-- Calculadora 31: Determinante de Matrices -->
+
+<div id="determinante_matrices" class="calculator">
+    
+    
+    <div class="display" id="display-determinante_matrices">0</div>
+    
+    <div class="buttons">
+        
+        <label for="select-det-size">Seleccionar Tamaño:</label>
+        <select id="select-det-size" onchange="mostrarInputsDeterminante()">
+            <option value="2x2" selected>2 x 2</option>
+            <option value="3x3">3 x 3</option>
+        </select>
+        
+        <div id="det-inputs-container" style="margin: 15px 0;">
+            <h4 id="det-h4-2x2">Matriz 2x2</h4>
+            <table class="matrix-input-table">
+                <tr><td><input type="number" id="a11" placeholder="a11"></td><td><input type="number" id="a12" placeholder="a12"></td></tr>
+                <tr><td><input type="number" id="a21" placeholder="a21"></td><td><input type="number" id="a22" placeholder="a22"></td></tr>
+            </table>
+        </div>
+
+        <button onclick="calcularDeterminante()" style="margin-top: 15px;">Calcular Determinante</button>
+        <button onclick="limpiarDeterminante()">C</button>
+    </div>
+    
+    <div id="resultado-determinante_matrices" style="margin-top:10px;"></div>
+</div>
+    
+        <!-- Calculadora 32:Inversa de Matrices -->
+<div id="inversa_matrices" class="calculator">
+   
+    <div class="display" id="display-inversa_matrices">0</div>
+
+    <div class="buttons">
+
+        <label for="select-inv-size">Seleccionar Tamaño:</label>
+        <select id="select-inv-size" onchange="mostrarInputsInversa()">
+            <option value="2x2" selected>2 x 2</option>
+            <option value="3x3">3 x 3</option>
+        </select>
+
+        <div id="inv-inputs-container" style="margin: 15px 0;"></div>
+
+        <button onclick="calcularInversa()" style="margin-top: 15px;">Calcular Inversa</button>
+        <button onclick="limpiarInversa()">C</button>
+
+    </div>
+
+    <div id="resultado-inversa_matrices" style="margin-top:10px;"></div>
+</div>
+
+
+    
+<!-- ============================================================
+    Calculadora ROI 
+============================================================ -->
+<div id="roi_calculator" class="calculator">
+    
+    <!-- Pantalla de resultados -->
+    <div class="display" id="display-roi">0</div>
+
+    <!-- Contenedor de inputs -->
+    <div class="buttons">
+        <div id="roi-inputs-container">
+            <div>
+                Inversión Inicial: <input type="number" id="inversion" placeholder="1000">
+            </div>
+            <div>
+                Ganancia Neta: <input type="number" id="ganancia" placeholder="200">
+            </div>
+        </div>
+
+        <!-- Botones -->
+        <div class="botones-base">
+            <button id="btn-calcular-roi">Calcular ROI</button>
+            <button id="btn-limpiar-roi">C</button>
+        </div>
+    </div>
+
+    <!-- Resultados -->
+    <div id="resultado-roi" class="resultado"></div>
+</div>
+
+
+
+
+    
+       <!-- Calculadora 34: Desviación Estándar / Varianza -->
+<div id="desviacion_estandar" class="calculator" style="max-width:500px; margin:auto;">
+    
+    <div class="display" id="display-desviacion">0</div>
+    
+    <div class="buttons">
+        <label for="datos-desviacion">Ingresa los datos separados por comas:</label>
+        <input type="text" id="datos-desviacion" placeholder="Ej: 4,5,8,10,12" style="width:100%; padding:5px; margin-bottom:5px;">
+
+        <select id="tipoCalculo-desviacion" style="width:100%; padding:5px; margin-bottom:5px;">
+            <option value="poblacional">Desviación Poblacional</option>
+            <option value="muestral">Desviación Muestral</option>
+            <option value="varianza">Varianza</option>
+        </select>
+
+        <button onclick="calcularDesviacion()" style="width:60%; padding:5px;">Calcular</button>
+        <button onclick="limpiarDesviacion()" style="width:48%; padding:5px;">C</button>
+    </div>
+    
+    <div id="resultado-desviacion" style="margin-top:10px;"></div>
+</div>
+
+
+
+
+        
+       <!-- Calculadora 35: Regresión Lineal (compacta) -->
+<div id="regresion_lineal" class="calculator">
+
+  <div class="display" id="display-regresion_lineal">0</div>
+
+  <div class="buttons" style="display:flex; flex-direction:column; gap:5px; max-width:300px;">
+      <label for="datos-regresion">Pares de datos (x,y):</label>
+      <input type="text" id="datos-regresion" placeholder="Ej: 1,2;2,3;3,5">
+
+      <div style="display:flex; gap:5px;">
+          <button style="flex:1;" onclick="calcularRegresionLineal()">Calcular</button>
+          <button style="flex:1;" onclick="limpiarRegresion()">C</button>
+      </div>
+  </div>
+
+  <div id="resultado-regresion" style="margin-top:10px;"></div>
+</div>
+
+
+
+    
+       <!-- ============================================================
+     CALCULADORA 36: Molaridad y Concentración
+============================================================ -->
+<div id="molaridad" class="calculator" style="max-width: 380px; padding: 12px; margin: auto; font-size: 14px;">
+  
+  <h2 style="text-align:center; font-size:16px; margin-bottom:8px;">
+    36. Molaridad y Concentración Química
+  </h2>
+
+  <div class="display" id="display-molaridad" 
+       style="background:#f3f3f3; padding:6px; border-radius:8px; text-align:center; margin-bottom:8px;">
+0
+  </div>
+
+  <div class="buttons" style="display:flex; flex-direction:column; gap:6px;">
+    
+    <select id="tipoCalculo-molaridad" onchange="mostrarCamposMolaridad()" 
+            style="padding:4px; border-radius:6px;">
+      <option value="molaridad">Calcular Molaridad (M)</option>
+      <option value="masa">Calcular Masa del Soluto (g)</option>
+      <option value="porcentaje">Calcular Concentración (%)</option>
+    </select>
+    
+    <div id="inputs-molaridad" style="display:flex; flex-direction:column; gap:4px; margin-top:6px;">
+      <label for="masa-mol">Masa del soluto (g):</label>
+      <input type="number" id="masa-mol" placeholder="Ej. 58.44" step="any" style="padding:3px; border-radius:5px;">
+
+      <label for="mm-mol">Masa molar (g/mol):</label>
+      <input type="number" id="mm-mol" placeholder="Ej. 58.44 (NaCl)" step="any" style="padding:3px; border-radius:5px;">
+
+      <label for="volumen-mol">Volumen de la disolución (L):</label>
+      <input type="number" id="volumen-mol" placeholder="Ej. 1" step="any" style="padding:3px; border-radius:5px;">
+    </div>
+
+    <div style="display:flex; justify-content:space-between; margin-top:8px;">
+      <button onclick="calcularMolaridad()" 
+              style="flex:1; margin-right:4px; padding:6px; border-radius:8px; cursor:pointer;">
+        Calcular
+      </button>
+      <button onclick="limpiarMolaridad()" 
+              style="flex:1; margin-left:4px; padding:6px; border-radius:8px; cursor:pointer;">
+        C
+      </button>
+    </div>
+  </div>
+  
+  <div id="resultado-molaridad" style="margin-top:10px; font-size:13px; text-align:center;"></div>
+</div>
+
+    
+    <!-- Calculadora 37: Masa Molar de Compuestos -->
+<div id="masa_molar" class="calculator">
+
+    <div class="display" id="display-masa_molar">0</div>
+
+    <div class="buttons">
+        <label for="formula-mm">Fórmula química:</label>
+        <input type="text" id="formula-mm" placeholder="Ejemplo: H2O, NaCl, C6H12O6">
+        
+        <button onclick="calcularMasaMolarJS()">Calcular masa molar</button>
+        <button onclick="limpiarMasaMolar()">C</button>
+    </div>
+
+    <div id="resultado-mm" style="margin-top:10px;"></div>
+</div>
+
+    
+
+    
+        <!-- Calculadora 38:Balanceo de Ecuaciones Químicas -->
+    <div id="balanceo_ecuaciones" class="calculator">
+    
+    <div class="display" id="display-balanceo_ecuaciones">0</div>
+    
+    <div class="buttons">
+        <p>Ejemplo: <strong>H2 + O2 = H2O</strong></p>
+        
+        <input type="text" id="equation-balanceo" placeholder="Escribe tu ecuación...">
+        
+        <button onclick="balanceEquationJS()">Balancear</button>
+        <button onclick="limpiarBalanceo()">C</button>
+    </div>
+    
+    <div id="resultado-balanceo_ecuaciones" style="margin-top:10px;"></div>
+</div> 
+    
+        <!-- Calculadora 39: Préstamos / Amortización -->
+    <div id="prestamos" class="calculator">
+    
+    <div class="display" id="display-prestamos">0</div>
+    
+    <div class="buttons">
+        <label for="monto-prestamo">Monto del préstamo ($):</label>
+        <input type="number" id="monto-prestamo" placeholder="Ej. 10000">
+
+        <label for="tasa-prestamo">Tasa de interés anual (%):</label>
+        <input type="number" id="tasa-prestamo" placeholder="Ej. 12">
+
+        <label for="plazo-prestamo">Plazo:</label>
+        <input type="number" id="plazo-prestamo" placeholder="Ej. 24">
+        
+        <select id="tipoPlazo-prestamo">
+            <option value="meses">Meses</option>
+            <option value="años">Años</option>
+        </select>
+
+        <button onclick="calcularPrestamoJS()">Calcular</button>
+        <button onclick="limpiarPrestamo()">C</button>
+    </div>
+    
+    <div id="resultado-prestamos" style="margin-top:10px;"></div>
+    <div id="tabla-prestamos" style="margin-top:10px; max-height: 200px; overflow-y: auto;"></div>
+</div> 
+    
+        <!-- Calculadora 40:Hipotecaria / Créditos -->
+    <div id="hipotecaria" class="calculator">
+    
+    <div class="display" id="display-hipotecaria">0</div>
+    
+    <div class="buttons">
+        <label for="tipoCredito-hip">Tipo de crédito:</label>
+        <select id="tipoCredito-hip" onchange="actualizarTasaHipotecaria()">
+            <option value="personal">Crédito personal</option>
+            <option value="hipotecario">Crédito hipotecario</option>
+        </select>
+
+        <label for="monto-hip">Monto del préstamo ($):</label>
+        <input type="number" id="monto-hip" placeholder="Ej. 50000">
+
+        <label for="tasa-hip">Tasa de interés anual (%):</label>
+        <input type="number" id="tasa-hip" placeholder="Ej. 8">
+
+        <label for="plazo-hip">Plazo en años:</label>
+        <input type="number" id="plazo-hip" placeholder="Ej. 20">
+
+        <button onclick="calcularCreditoHipotecarioJS()">Calcular</button>
+        <button onclick="limpiarHipotecaria()">C</button>
+    </div>
+    
+    <div id="resultado-hipotecaria" style="margin-top:10px;"></div>
+    <div id="tabla-hipotecaria" style="margin-top:10px; max-height: 200px; overflow-y: auto;"></div>
+</div>
+    
+
+
+    <!-- PANEL DE PERSONALIZACIÓN -->
+    <div class="personalizacion-col" id="personalizacion-col" style="display:none;">
+        <h3>Personalizar Estilo</h3>
+
+        <div class="personalizacion-grupo">
+            <label>Fondo de la pantalla:</label>
+            <input type="color" id="fondo-pantalla" value="#f0f0f0">
+        </div>
+        <div class="personalizacion-grupo">
+            <label>Color de la base de la calculadora:</label>
+            <input type="color" id="color-base-calculadora" value="#ffffff">
+        </div>
+        <div class="personalizacion-grupo">
+            <label>Color de los botones:</label>
+            <input type="color" id="color-botones" value="#eeeeee">
+        </div>
+        <div class="personalizacion-grupo">
+            <label>Color de botones al pasar el mouse:</label>
+            <input type="color" id="color-botones-hover" value="#dddddd">
+        </div>
+        <div class="personalizacion-grupo">
+            <label>Transparencia de la base de la calculadora:</label>
+            <input type="range" id="transparencia-base" min="0" max="1" step="0.05" value="1">
+        </div>
+        <div class="personalizacion-grupo">
+            <label>Transparencia de botones y barra de resultado:</label>
+            <input type="range" id="transparencia-botones-display" min="0" max="1" step="0.05" value="0.9">
+        </div>
+        <div class="personalizacion-grupo">
+            <label>Imagen de fondo de la pantalla:</label>
+            <input type="file" id="img-fondo-pantalla" accept="image/*">
+        </div>
+        <div class="personalizacion-grupo">
+            <label>Imagen de fondo de la calculadora:</label>
+            <input type="file" id="img-fondo-calculadora" accept="image/*">
+        </div>
+        <div class="personalizacion-grupo">
+            <label>Video de fondo de la pantalla:</label>
+            <input type="file" id="fondo-video-input" accept="video/*">
+        </div>
+        <div class="personalizacion-grupo">
+            <button onclick="resetEstilo()">Restaurar estilo por defecto</button>
+        </div>
+    </div> <!-- FIN PANEL PERSONALIZACIÓN -->
+
+</div> <!-- FIN MAIN CONTAINER -->
+
+<!-- SCRIPTS -->
+<script src="main.js"></script>
+<script src="estilos.js"></script>
+<script src="basica.js"></script>
+<script src="cientifica.js"></script>
+<script src="programadora.js"></script>
+<script src="estadistica.js"></script>
+<script src="grafica.js"></script>
+<script src="iva.js"></script>
+
+   <script src="descuento.js"></script>
+    <script src="presion.js"></script>
+    <script src="figuras.js"></script>
+    <script src="triB.js"></script>
+    <script src="Dmatrices.js"></script>
+    <script src="figuras.js"></script>
+    <script src="triB.js"></script>
+    <script src="Dmatrices.js"></script>
+    <script src="MMC.js"></script> 
+<script src="editar tamaño.js"></script>
+
+<script>
+function togglePersonalizacion() {
+    const panel = document.getElementById('personalizacion-col');
+    panel.style.display = (panel.style.display === 'none') ? 'block' : 'none';
+}
+
+// Desplegable calculadoras
+function toggleDropdown() {
+    const dropdown = document.getElementById('dropdown-calculadoras');
+    dropdown.parentElement.classList.toggle('show');
+}
+
+// Cerrar desplegable si se hace clic fuera
+window.onclick = function(event) {
+    if (!event.target.matches('#btn-calculadoras > button')) {
+        const dropdowns = document.getElementsByClassName("dropdown");
+        for (let i = 0; i < dropdowns.length; i++) {
+            dropdowns[i].classList.remove('show');
+        }
+    }
+}
+
+// Hacer editable el display de todas las calculadoras
+document.querySelectorAll('.display').forEach(display => {
+    display.setAttribute('contenteditable','true');
+    display.addEventListener('focus', () => {
+        if(display.innerText === '0' || display.innerText === 'y = ') display.innerText = '';
+    });
+    display.addEventListener('keypress', e => {
+        if(e.key === 'Enter') e.preventDefault();
+    });
+});
+</script>
+
+</body>
+</html>
